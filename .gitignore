@@ -13,7 +13,6 @@ src/test_virtualcoin
 
 # Compilation and Qt preprocessor part
 *.qm
-Makefile
 virtualcoin-qt
 VirtualCoin-Qt.app
 
