@@ -2321,12 +2321,10 @@ bool CBlock::AcceptBlock(CValidationState &state, CDiskBlockPos *dbp)
                     if (abs(n1-n2) > n1*0.005) 
                         return state.DoS(100, error("AcceptBlock() : incorrect proof of work (DGW2)"));
                 }
-            } 
-/* else {
+            } else {
                 if (nBits != GetNextWorkRequired(pindexPrev, this))
                     return state.DoS(100, error("AcceptBlock() : incorrect proof of work"));
             }
-*/
         #else
             // Check proof of work
             if(nHeight >= 34140 && nHeight <= 45000){
@@ -2335,14 +2333,11 @@ bool CBlock::AcceptBlock(CValidationState &state, CDiskBlockPos *dbp)
                 double n2 = ConvertBitsToDouble(nBitsNext);
                 if (abs(n1-n2) > n1*0.2)
                     return state.DoS(100, error("AcceptBlock() : incorrect proof of work (DGW pre-fork)"));
-            } 
-/*
-else {
+            } else {
                 if (nBits != GetNextWorkRequired(pindexPrev, this))
                     return state.DoS(100, error("AcceptBlock() : incorrect proof of work"));
             }
-*/  
-      #endif
+        #endif
 
         // Prevent blocks from too far in the future
         if(fTestNet || nHeight >= 45000){
@@ -4749,7 +4744,7 @@ void static VirtualCoinMiner(CWallet *pwallet)
     CReserveKey reservekey(pwallet);
     unsigned int nExtraNonce = 0;
 
-    try { loop {
+    try { while (true) {
         while (vNodes.empty())
             MilliSleep(1000);
 
@@ -4787,17 +4782,17 @@ void static VirtualCoinMiner(CWallet *pwallet)
         //
         int64 nStart = GetTime();
         uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
-        loop
+        while (true)
         {
             unsigned int nHashesDone = 0;
 
             uint256 thash;
-            loop
+            while (true)
             {
                 thash = pblock->GetHash();
 /*
  char scratchpad[SCRYPT_SCRATCHPAD_SIZE];
-loop
+while (true)
 {
 #if defined(USE_SSE2)
 // Detection would work, but in cases where we KNOW it always has SSE2,
