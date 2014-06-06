@@ -2321,10 +2321,10 @@ bool CBlock::AcceptBlock(CValidationState &state, CDiskBlockPos *dbp)
                     if (abs(n1-n2) > n1*0.005) 
                         return state.DoS(100, error("AcceptBlock() : incorrect proof of work (DGW2)"));
                 }
-            } else {
+            } /* else {
                 if (nBits != GetNextWorkRequired(pindexPrev, this))
                     return state.DoS(100, error("AcceptBlock() : incorrect proof of work"));
-            }
+            } */
         #else
             // Check proof of work
             if(nHeight >= 34140 && nHeight <= 45000){
